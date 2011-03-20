@@ -1,0 +1,11 @@
+= Relatable
+
+A Rails gem for emulating a triple store.
+
+== Install 
+
+  gem install jquigg-relatable --source http://gems.github.com
+
+== Usage
+
+TBD
