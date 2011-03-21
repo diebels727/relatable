@@ -4,8 +4,51 @@ A Rails gem for emulating a triple store.
 
 == Install 
 
-  gem install jquigg-relatable --source http://gems.github.com
+  1. gem install relatable.
+  2. rails g migration <Association Model> sourcable_id:integer sourcable_type:string sourcable_action:string targetable_id:integer targetable_type:string targetable_action:string
+  3. rake db:migrate
 
 == Usage
 
-TBD
+Include this gem in all models that will participate in the relation:
+
+  include Relatable
+
+In the 'Association' model add:
+
+  belongs_to_association
+
+To initially set a class-level associations (has_many) for each model add:
+
+...in the source model
+
+  acts_as_association <symbol of association>, :as => :sourcable 
+ 
+...in the target model
+
+  acts_as_association <symbol of assocaition>, :as => :targetable
+
+Associations can be altered and defined at runtime, which is the original motivation for developing this gem.  For example:
+
+  source_model = Foo.new
+  target_model = Bar.new
+  association  = Association.new
+  source_model.instance_acts_as :drops, :as => :sourcable
+  target_model.instance_acts_as :receives, :as => :targetable
+
+  source_model.drops association
+  target_model.receives association
+
+This creates a triple store in Association.  All instances of source_model can be obtained with:
+
+  source_model.associations
+
+You can dynamically alter the association, so, for example:
+
+  source_model.instance_acts_as :anything_i_want, :as => :targetable
+  source_model.anything_i_want association
+
+The above will alter the association correspondingly.
+
+All associations can be obtained through Association.all.
+
