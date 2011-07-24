@@ -33,11 +33,11 @@ Associations can be altered and defined at runtime, which is the original motiva
   source_model = Foo.new
   target_model = Bar.new
   association  = Association.new
-  source_model.instance_acts_as :drops, :as => :sourcable
-  target_model.instance_acts_as :receives, :as => :targetable
+  source_model.instance_acts_as :forward_association, :as => :sourcable
+  target_model.instance_acts_as :reverse_association, :as => :targetable
 
-  source_model.drops association
-  target_model.receives association
+  source_model.forward_association association
+  target_model.reverse_association association
 
 This creates a triple store in Association.  All instances of source_model can be obtained with:
 
